@@ -1,0 +1,8 @@
+streamlit
+numpy
+scipy
+torch
+matplotlib
+tqdm
+pyyaml
+gradio
