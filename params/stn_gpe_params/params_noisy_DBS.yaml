@@ -25,7 +25,7 @@ DBS : True
 DBS_func: 'biphasicDBS_variablefreq' # 'biphasicDBS' # 'monophasicDBS', 'biphasicDBS' , 'biphasicDBS_uninoise', 'biphasicDBS_normalnoise'
 DBS_amplitude : 175 #250 
 DBS_freq : 30 #150
-pulse_width_micro : 200 #200 
+pulse_width_micro : 200 #200 microseconds
 DBS_normmean : 2000 # microseconds
 DBS_normstd : 1000 #4000 #200 #700 # micro seconds
 # sector_wise : False
