@@ -1,4 +1,4 @@
-DBS: false
+DBS: true
 DBS_A1: 250
 DBS_A2: -250
 DBS_duty: 0.052
@@ -13,11 +13,11 @@ dt: 0.1
 inter_sparse: 0.1
 lat_sparse: 0.1
 lat_strength_gpe: 0.1
-lat_strength_stn: 0.02
+lat_strength_stn: 0.0275
 pulseinterval: 10
 sigma: 3
 spread_amplitude: 1
-stn_gpe_noise: 3
+stn_gpe_noise: 0
 stn_gpe_units: 16
 time: 50000
 wgs_strength: 0.1

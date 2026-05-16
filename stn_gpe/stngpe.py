@@ -164,7 +164,6 @@ def STN_GPe_loop(exp_yaml_path):
     else:
         I_DBS = np.zeros(sampling_freq)
     
-    sector = 0
     for i in tqdm(range(time)):
         # SYNAPTIC CURRENT CALCULATION FOR GPe
         #I_gabalat_gpe

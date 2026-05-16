@@ -23,7 +23,6 @@ stn_gpe_noise: 3
 # DBS Params
 DBS : False
 DBS_func: 'biphasicDBS' # 'monophasicDBS', 'biphasicDBS' , 'biphasicDBS_uninoise', 'biphasicDBS_normalnoise'
-# DBS_amplitude : 150
 DBS_freq : 130
 DBS_duty : 0.052 #26 #0.026
 DBS_A1 : 250
