@@ -16,7 +16,7 @@ PROB_B = 0.3
 POS_REWARD = 10
 NEG_REWARD = -2
 
-DELAY = 0.2 #1.5  # slightly increased so reward is visible
+DELAY = 0.3 #1.5  # slightly increased so reward is visible
 
 # -------------------------
 # SESSION STATE INIT
