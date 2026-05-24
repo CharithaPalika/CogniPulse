@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STN-GPe Model — Workshop Diagrams</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f0f4f8;
+    color: #1a2332;
+    padding: 24px;
+  }
+  h1 {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a2332;
+    margin-bottom: 6px;
+    letter-spacing: 0.3px;
+  }
+  .subtitle {
+    text-align: center;
+    font-size: 13px;
+    color: #5a7090;
+    margin-bottom: 28px;
+  }
+  .section-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: #7a90aa;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  .section-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #1a2332;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  .card {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    padding: 28px 32px 24px;
+    margin-bottom: 28px;
+  }
+  svg text { font-family: 'Segoe UI', Arial, sans-serif; }
+
+  /* Nav tabs */
+  .tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .tab-btn {
+    padding: 8px 20px;
+    border-radius: 8px;
+    border: 2px solid #d0dcea;
+    background: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4a6080;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .tab-btn.active {
+    background: #2563eb;
+    color: #fff;
+    border-color: #2563eb;
+  }
+  .tab-btn:hover:not(.active) {
+    border-color: #2563eb;
+    color: #2563eb;
+  }
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  .legend-row {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 14px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #4a6080;
+    font-weight: 600;
+  }
+  .legend-dot {
+    width: 14px; height: 14px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+  .legend-line {
+    width: 28px; height: 3px;
+    flex-shrink: 0;
+  }
+  .eq-box {
+    background: #f5f8ff;
+    border: 1.5px solid #c7d8f5;
+    border-radius: 8px;
+    padding: 10px 16px;
+    margin-top: 14px;
+    font-size: 12.5px;
+    color: #1a2332;
+    line-height: 1.9;
+  }
+  .eq-box b { color: #2563eb; }
+  .caption {
+    font-size: 12px;
+    color: #7a90aa;
+    text-align: center;
+    margin-top: 10px;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+
+<h1>STN–GPe Neural Circuit Model</h1>
+<p class="subtitle">Workshop Diagrams &nbsp;·&nbsp; Computational Neuroscience</p>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('circuit')">① STN–GPe Circuit</button>
+  <button class="tab-btn" onclick="showTab('dbs')">② DBS Stimulation</button>
+  <button class="tab-btn" onclick="showTab('flow')">③ How the Model Works</button>
+  <button class="tab-btn" onclick="showTab('analysis')">④ Analysis: Normal vs PD</button>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ PANEL 1 -->
+<div id="panel-circuit" class="panel active">
+  <div class="card">
+    <div class="section-label">Diagram 1</div>
+    <div class="section-title">The STN–GPe Circuit</div>
+
+    <svg viewBox="0 0 780 480" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:820px;display:block;margin:0 auto;">
+      <defs>
+        <!-- Arrow heads -->
+        <marker id="exc" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#16a34a"/>
+        </marker>
+        <marker id="inh" markerWidth="10" markerHeight="8" refX="0" refY="4" orient="auto">
+          <line x1="0" y1="0" x2="0" y2="8" stroke="#dc2626" stroke-width="2.5"/>
+        </marker>
+        <marker id="ext" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#7c3aed"/>
+        </marker>
+        <marker id="d2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#b45309"/>
+        </marker>
+        <marker id="lat_exc" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#059669"/>
+        </marker>
+        <marker id="lat_inh" markerWidth="10" markerHeight="8" refX="0" refY="4" orient="auto">
+          <line x1="0" y1="0" x2="0" y2="8" stroke="#e11d48" stroke-width="2.5"/>
+        </marker>
+
+        <!-- Neuron gradient -->
+        <radialGradient id="stn_grad" cx="50%" cy="40%">
+          <stop offset="0%" stop-color="#fef9c3"/>
+          <stop offset="100%" stop-color="#f59e0b"/>
+        </radialGradient>
+        <radialGradient id="gpe_grad" cx="50%" cy="40%">
+          <stop offset="0%" stop-color="#dbeafe"/>
+          <stop offset="100%" stop-color="#3b82f6"/>
+        </radialGradient>
+      </defs>
+
+      <!-- ── Background blobs ── -->
+      <ellipse cx="215" cy="245" rx="148" ry="130" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6,3" opacity="0.6"/>
+      <ellipse cx="565" cy="245" rx="148" ry="130" fill="#dbeafe" stroke="#3b82f6" stroke-width="2" stroke-dasharray="6,3" opacity="0.6"/>
+
+      <!-- Region labels -->
+      <text x="215" y="98" text-anchor="middle" font-size="15" font-weight="700" fill="#b45309">STN</text>
+      <text x="215" y="115" text-anchor="middle" font-size="10.5" fill="#78350f">Subthalamic Nucleus</text>
+      <text x="215" y="130" text-anchor="middle" font-size="10" fill="#92400e">(Excitatory neurons)</text>
+
+      <text x="565" y="98" text-anchor="middle" font-size="15" font-weight="700" fill="#1d4ed8">GPe</text>
+      <text x="565" y="115" text-anchor="middle" font-size="10.5" fill="#1e40af">Globus Pallidus externa</text>
+      <text x="565" y="130" text-anchor="middle" font-size="10" fill="#1e40af">(Inhibitory neurons)</text>
+
+      <!-- ── STN neurons (grid of 6) ── -->
+      <!-- Row 1 -->
+      <circle cx="165" cy="200" r="22" fill="url(#stn_grad)" stroke="#d97706" stroke-width="2"/>
+      <circle cx="215" cy="200" r="22" fill="url(#stn_grad)" stroke="#d97706" stroke-width="2"/>
+      <circle cx="265" cy="200" r="22" fill="url(#stn_grad)" stroke="#d97706" stroke-width="2"/>
+      <!-- Row 2 -->
+      <circle cx="165" cy="280" r="22" fill="url(#stn_grad)" stroke="#d97706" stroke-width="2"/>
+      <circle cx="215" cy="280" r="22" fill="url(#stn_grad)" stroke="#d97706" stroke-width="2"/>
+      <circle cx="265" cy="280" r="22" fill="url(#stn_grad)" stroke="#d97706" stroke-width="2"/>
+
+      <!-- STN neuron labels -->
+      <text x="165" y="204" text-anchor="middle" font-size="9.5" fill="#78350f">V,U</text>
+      <text x="215" y="204" text-anchor="middle" font-size="9.5" fill="#78350f">V,U</text>
+      <text x="265" y="204" text-anchor="middle" font-size="9.5" fill="#78350f">V,U</text>
+      <text x="165" y="284" text-anchor="middle" font-size="9.5" fill="#78350f">V,U</text>
+      <text x="215" y="284" text-anchor="middle" font-size="9.5" fill="#78350f">V,U</text>
+      <text x="265" y="284" text-anchor="middle" font-size="9.5" fill="#78350f">V,U</text>
+
+      <!-- STN lateral connections (curved) -->
+      <path d="M187,194 Q215,172 243,194" stroke="#059669" stroke-width="1.8" fill="none" stroke-dasharray="4,3" marker-end="url(#lat_exc)"/>
+      <path d="M187,286 Q215,308 243,286" stroke="#059669" stroke-width="1.8" fill="none" stroke-dasharray="4,3" marker-end="url(#lat_exc)"/>
+      <path d="M165,222 Q148,240 165,258" stroke="#059669" stroke-width="1.8" fill="none" stroke-dasharray="4,3" marker-end="url(#lat_exc)"/>
+
+      <!-- ── GPe neurons (grid of 6) ── -->
+      <circle cx="515" cy="200" r="22" fill="url(#gpe_grad)" stroke="#2563eb" stroke-width="2"/>
+      <circle cx="565" cy="200" r="22" fill="url(#gpe_grad)" stroke="#2563eb" stroke-width="2"/>
+      <circle cx="615" cy="200" r="22" fill="url(#gpe_grad)" stroke="#2563eb" stroke-width="2"/>
+      <circle cx="515" cy="280" r="22" fill="url(#gpe_grad)" stroke="#2563eb" stroke-width="2"/>
+      <circle cx="565" cy="280" r="22" fill="url(#gpe_grad)" stroke="#2563eb" stroke-width="2"/>
+      <circle cx="615" cy="280" r="22" fill="url(#gpe_grad)" stroke="#2563eb" stroke-width="2"/>
+
+      <text x="515" y="204" text-anchor="middle" font-size="9.5" fill="#1e3a8a">V,U</text>
+      <text x="565" y="204" text-anchor="middle" font-size="9.5" fill="#1e3a8a">V,U</text>
+      <text x="615" y="204" text-anchor="middle" font-size="9.5" fill="#1e3a8a">V,U</text>
+      <text x="515" y="284" text-anchor="middle" font-size="9.5" fill="#1e3a8a">V,U</text>
+      <text x="565" y="284" text-anchor="middle" font-size="9.5" fill="#1e3a8a">V,U</text>
+      <text x="615" y="284" text-anchor="middle" font-size="9.5" fill="#1e3a8a">V,U</text>
+
+      <!-- GPe lateral connections -->
+      <path d="M537,194 Q565,172 593,194" stroke="#e11d48" stroke-width="1.8" fill="none" stroke-dasharray="4,3" marker-end="url(#lat_inh)"/>
+      <path d="M537,286 Q565,308 593,286" stroke="#e11d48" stroke-width="1.8" fill="none" stroke-dasharray="4,3" marker-end="url(#lat_inh)"/>
+      <path d="M615,222 Q632,240 615,258" stroke="#e11d48" stroke-width="1.8" fill="none" stroke-dasharray="4,3" marker-end="url(#lat_inh)"/>
+
+      <!-- ── MAIN CONNECTIONS: STN → GPe (excitatory, top) ── -->
+      <path d="M287,190 Q390,155 493,190" stroke="#16a34a" stroke-width="2.8" fill="none" marker-end="url(#exc)"/>
+      <text x="390" y="150" text-anchor="middle" font-size="11.5" font-weight="700" fill="#15803d">EXCITATORY</text>
+      <text x="390" y="163" text-anchor="middle" font-size="10" fill="#15803d">AMPA + NMDA receptors</text>
+
+      <!-- ── MAIN CONNECTIONS: GPe → STN (inhibitory, bottom) ── -->
+      <path d="M493,290 Q390,335 287,290" stroke="#dc2626" stroke-width="2.8" fill="none" marker-end="url(#inh)"/>
+      <text x="390" y="352" text-anchor="middle" font-size="11.5" font-weight="700" fill="#b91c1c">INHIBITORY</text>
+      <text x="390" y="365" text-anchor="middle" font-size="10" fill="#b91c1c">GABA receptors</text>
+
+      <!-- ── External Input to STN ── -->
+      <line x1="80" y1="240" x2="140" y2="240" stroke="#7c3aed" stroke-width="2.2" marker-end="url(#ext)"/>
+      <text x="76" y="229" text-anchor="middle" font-size="10.5" font-weight="700" fill="#7c3aed">I_ext</text>
+      <text x="76" y="243" text-anchor="middle" font-size="9.5" fill="#7c3aed">STN</text>
+
+      <!-- ── External Input to GPe ── -->
+      <line x1="700" y1="240" x2="640" y2="240" stroke="#7c3aed" stroke-width="2.2" marker-end="url(#ext)"/>
+      <text x="706" y="229" text-anchor="middle" font-size="10.5" font-weight="700" fill="#7c3aed">I_ext</text>
+      <text x="706" y="243" text-anchor="middle" font-size="9.5" fill="#7c3aed">GPe</text>
+
+      <!-- ── Striatal D2 → GPe ── -->
+      <line x1="565" y1="430" x2="565" y2="305" stroke="#b45309" stroke-width="2.2" stroke-dasharray="5,3" marker-end="url(#d2)"/>
+      <rect x="505" y="432" width="120" height="34" rx="7" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+      <text x="565" y="449" text-anchor="middle" font-size="10.5" font-weight="700" fill="#92400e">Striatum D2</text>
+      <text x="565" y="462" text-anchor="middle" font-size="9.5" fill="#b45309">(inhibitory input)</text>
+
+      <!-- ── Izhikevich label on a neuron ── -->
+      <rect x="130" y="395" width="170" height="62" rx="8" fill="#fffbeb" stroke="#d97706" stroke-width="1.5"/>
+      <text x="215" y="412" text-anchor="middle" font-size="10" font-weight="700" fill="#92400e">Izhikevich Neuron Model</text>
+      <text x="215" y="428" text-anchor="middle" font-size="9.5" fill="#78350f">V' = 0.04V² + 5V + 140 − U + I</text>
+      <text x="215" y="443" text-anchor="middle" font-size="9.5" fill="#78350f">U' = a(bV − U)</text>
+      <text x="215" y="456" text-anchor="middle" font-size="9" fill="#92400e">if V &gt; 30mV → spike! reset V</text>
+
+    </svg>
+
+    <div class="legend-row">
+      <div class="legend-item"><div class="legend-line" style="background:#16a34a;height:3px"></div> Excitatory (STN→GPe)</div>
+      <div class="legend-item"><div class="legend-line" style="background:#dc2626;height:3px"></div> Inhibitory (GPe→STN)</div>
+      <div class="legend-item"><div class="legend-line" style="background:#059669;height:2px;border-top: 2px dashed #059669;background:none"></div> STN lateral (excitatory)</div>
+      <div class="legend-item"><div class="legend-line" style="background:#e11d48;height:2px;border-top: 2px dashed #e11d48;background:none"></div> GPe lateral (inhibitory)</div>
+      <div class="legend-item"><div class="legend-line" style="background:#7c3aed;height:3px"></div> External input</div>
+      <div class="legend-item"><div class="legend-line" style="background:#b45309;height:2px;border-top: 2px dashed #b45309;background:none"></div> Striatal D2</div>
+    </div>
+
+    <div class="eq-box">
+      <b>How do neurons talk to each other?</b> Each connection has a "gating variable" h that jumps up when a spike arrives, then slowly fades:
+      &nbsp; <b>h' = (−h + spike) / τ</b> &nbsp; where τ is the decay time (GABA: 4ms, AMPA: 6ms, NMDA: 160ms).
+      The resulting synaptic current is: <b>I = weight × h × (E_reversal − V)</b>.
+      E_reversal is positive for excitatory receptors (pushes V up) and negative for inhibitory ones (pulls V down).
+    </div>
+    <p class="caption">Each yellow circle = one STN neuron. Each blue circle = one GPe neuron. V = membrane voltage, U = recovery variable.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ PANEL 2 -->
+<div id="panel-dbs" class="panel">
+  <div class="card">
+    <div class="section-label">Diagram 2</div>
+    <div class="section-title">Deep Brain Stimulation (DBS)</div>
+
+    <svg viewBox="0 0 780 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:820px;display:block;margin:0 auto;">
+      <defs>
+        <marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#374151"/>
+        </marker>
+        <marker id="arr_red" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#dc2626"/>
+        </marker>
+        <!-- Gaussian heatmap approximated with radial gradient -->
+        <radialGradient id="gauss_heat" cx="50%" cy="50%" r="50%">
+          <stop offset="0%"   stop-color="#dc2626" stop-opacity="0.85"/>
+          <stop offset="30%"  stop-color="#f97316" stop-opacity="0.7"/>
+          <stop offset="60%"  stop-color="#fbbf24" stop-opacity="0.5"/>
+          <stop offset="85%"  stop-color="#bfdbfe" stop-opacity="0.3"/>
+          <stop offset="100%" stop-color="#eff6ff"  stop-opacity="0.05"/>
+        </radialGradient>
+      </defs>
+
+      <!-- ════ LEFT: Electrode schematic ════ -->
+      <rect x="30" y="30" width="200" height="260" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+      <text x="130" y="54" text-anchor="middle" font-size="12" font-weight="700" fill="#374151">DBS Electrode</text>
+
+      <!-- Brain outline -->
+      <ellipse cx="130" cy="180" rx="80" ry="95" fill="#fef9ee" stroke="#d1b87a" stroke-width="2"/>
+      <!-- Brain squiggle top -->
+      <path d="M70,130 Q90,115 105,128 Q118,110 130,122 Q142,108 155,122 Q170,112 185,128 Q195,140 190,155" stroke="#d1b87a" stroke-width="1.5" fill="none"/>
+
+      <!-- Electrode shaft -->
+      <rect x="124" y="50" width="12" height="110" rx="4" fill="#94a3b8" stroke="#64748b" stroke-width="1"/>
+      <!-- Electrode tip contacts -->
+      <rect x="122" y="155" width="16" height="7" rx="2" fill="#f59e0b" stroke="#d97706" stroke-width="1"/>
+      <rect x="122" y="165" width="16" height="7" rx="2" fill="#f59e0b" stroke="#d97706" stroke-width="1"/>
+      <rect x="122" y="175" width="16" height="7" rx="2" fill="#ef4444" stroke="#b91c1c" stroke-width="1.5"/>
+      <rect x="122" y="185" width="16" height="7" rx="2" fill="#ef4444" stroke="#b91c1c" stroke-width="1.5"/>
+
+      <!-- Active contact label -->
+      <line x1="140" y1="183" x2="175" y2="183" stroke="#dc2626" stroke-width="1.5" marker-end="url(#arr_red)"/>
+      <text x="145" y="178" font-size="9" fill="#dc2626" font-weight="700">Active</text>
+      <text x="145" y="189" font-size="9" fill="#dc2626">contact</text>
+
+      <!-- STN region label in brain -->
+      <ellipse cx="130" cy="230" rx="30" ry="20" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5" opacity="0.8"/>
+      <text x="130" y="228" text-anchor="middle" font-size="9.5" font-weight="700" fill="#92400e">STN</text>
+      <text x="130" y="240" text-anchor="middle" font-size="8.5" fill="#b45309">neurons</text>
+
+      <text x="130" y="305" text-anchor="middle" font-size="10" fill="#64748b">Electrode inserted near STN</text>
+
+      <!-- ════ TOP RIGHT: Pulse waveform ════ -->
+      <rect x="265" y="20" width="480" height="210" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+      <text x="505" y="44" text-anchor="middle" font-size="12.5" font-weight="700" fill="#374151">Biphasic DBS Pulse (what the signal looks like)</text>
+
+      <!-- Axes -->
+      <line x1="300" y1="155" x2="720" y2="155" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr2)"/>
+      <line x1="300" y1="180" x2="300" y2="65" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr2)"/>
+      <text x="724" y="158" font-size="10" fill="#64748b">time</text>
+      <text x="290" y="62" font-size="10" fill="#64748b" text-anchor="end">Current</text>
+      <text x="294" y="160" text-anchor="end" font-size="9" fill="#94a3b8">0</text>
+      <text x="294" y="110" text-anchor="end" font-size="9" fill="#16a34a">+A</text>
+      <text x="294" y="200" text-anchor="end" font-size="9" fill="#dc2626">−A</text>
+
+      <!-- Pulse 1 - positive phase -->
+      <rect x="320" y="108" width="38" height="47" fill="#bbf7d0" stroke="#16a34a" stroke-width="2"/>
+      <!-- Pulse 1 - negative phase -->
+      <rect x="360" y="155" width="38" height="47" fill="#fecaca" stroke="#dc2626" stroke-width="2"/>
+
+      <!-- Pulse 2 -->
+      <rect x="450" y="108" width="38" height="47" fill="#bbf7d0" stroke="#16a34a" stroke-width="2"/>
+      <rect x="490" y="155" width="38" height="47" fill="#fecaca" stroke="#dc2626" stroke-width="2"/>
+
+      <!-- Pulse 3 -->
+      <rect x="580" y="108" width="38" height="47" fill="#bbf7d0" stroke="#16a34a" stroke-width="2"/>
+      <rect x="618" y="155" width="38" height="47" fill="#fecaca" stroke="#dc2626" stroke-width="2"/>
+
+      <!-- zero line -->
+      <line x1="300" y1="155" x2="720" y2="155" stroke="#64748b" stroke-width="1" stroke-dasharray="3,3"/>
+
+      <!-- Annotations -->
+      <line x1="320" y1="95" x2="398" y2="95" stroke="#374151" stroke-width="1.2"/>
+      <text x="359" y="90" text-anchor="middle" font-size="10" fill="#374151" font-weight="600">pulse width</text>
+      <line x1="320" y1="92" x2="320" y2="98" stroke="#374151" stroke-width="1.2"/>
+      <line x1="398" y1="92" x2="398" y2="98" stroke="#374151" stroke-width="1.2"/>
+
+      <line x1="320" y1="82" x2="450" y2="82" stroke="#7c3aed" stroke-width="1.5"/>
+      <text x="385" y="77" text-anchor="middle" font-size="10" fill="#7c3aed" font-weight="600">period T = 1/freq</text>
+      <line x1="320" y1="79" x2="320" y2="85" stroke="#7c3aed" stroke-width="1.2"/>
+      <line x1="450" y1="79" x2="450" y2="85" stroke="#7c3aed" stroke-width="1.2"/>
+
+      <text x="505" y="185" text-anchor="middle" font-size="10.5" fill="#1e40af" font-weight="600">~130 Hz (typical DBS frequency)</text>
+      <text x="505" y="199" text-anchor="middle" font-size="9.5" fill="#64748b">Each pulse: positive phase first, then negative phase</text>
+
+      <!-- ════ BOTTOM RIGHT: Gaussian Spread ════ -->
+      <rect x="265" y="245" width="480" height="240" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+      <text x="505" y="268" text-anchor="middle" font-size="12.5" font-weight="700" fill="#374151">Gaussian Spatial Spread on Neuron Grid</text>
+
+      <!-- Neuron grid -->
+      <!-- 7x7 grid, each cell ~28px -->
+      <!-- Center the grid at ~505, 370 -->
+      <g id="grid">
+        <!-- Compute colors based on Gaussian distance from center (3,3) -->
+        <!-- sigma ~ 1.5 cells, amplitude shown as opacity -->
+        <!-- Row 0 -->
+        <circle cx="393" cy="295" r="12" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1"/>
+        <circle cx="421" cy="295" r="12" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+        <circle cx="449" cy="295" r="12" fill="#bfdbfe" stroke="#60a5fa" stroke-width="1"/>
+        <circle cx="477" cy="295" r="12" fill="#93c5fd" stroke="#3b82f6" stroke-width="1"/>
+        <circle cx="505" cy="295" r="12" fill="#bfdbfe" stroke="#60a5fa" stroke-width="1"/>
+        <circle cx="533" cy="295" r="12" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+        <circle cx="561" cy="295" r="12" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1"/>
+        <!-- Row 1 -->
+        <circle cx="393" cy="323" r="12" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+        <circle cx="421" cy="323" r="12" fill="#bfdbfe" stroke="#60a5fa" stroke-width="1"/>
+        <circle cx="449" cy="323" r="12" fill="#fbbf24" stroke="#f59e0b" stroke-width="1.5"/>
+        <circle cx="477" cy="323" r="12" fill="#f97316" stroke="#ea580c" stroke-width="1.5"/>
+        <circle cx="505" cy="323" r="12" fill="#fbbf24" stroke="#f59e0b" stroke-width="1.5"/>
+        <circle cx="533" cy="323" r="12" fill="#bfdbfe" stroke="#60a5fa" stroke-width="1"/>
+        <circle cx="561" cy="323" r="12" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+        <!-- Row 2 -->
+        <circle cx="393" cy="351" r="12" fill="#bfdbfe" stroke="#60a5fa" stroke-width="1"/>
+        <circle cx="421" cy="351" r="12" fill="#fbbf24" stroke="#f59e0b" stroke-width="1.5"/>
+        <circle cx="449" cy="351" r="12" fill="#f97316" stroke="#ea580c" stroke-width="2"/>
+        <circle cx="477" cy="351" r="14" fill="#dc2626" stroke="#991b1b" stroke-width="2"/>
+        <circle cx="505" cy="351" r="12" fill="#f97316" stroke="#ea580c" stroke-width="2"/>
+        <circle cx="533" cy="351" r="12" fill="#fbbf24" stroke="#f59e0b" stroke-width="1.5"/>
+        <circle cx="561" cy="351" r="12" fill="#bfdbfe" stroke="#60a5fa" stroke-width="1"/>
+        <!-- Row 3: center row -->
+        <circle cx="393" cy="379" r="12" fill="#93c5fd" stroke="#3b82f6" stroke-width="1"/>
+        <circle cx="421" cy="379" r="12" fill="#f97316" stroke="#ea580c" stroke-width="1.5"/>
+        <circle cx="449" cy="379" r="12" fill="#dc2626" stroke="#991b1b" stroke-width="2"/>
+        <circle cx="477" cy="379" r="16" fill="#7f1d1d" stroke="#450a0a" stroke-width="2.5"/>
+        <circle cx="505" cy="379" r="12" fill="#dc2626" stroke="#991b1b" stroke-width="2"/>
+        <circle cx="533" cy="379" r="12" fill="#f97316" stroke="#ea580c" stroke-width="1.5"/>
+        <circle cx="561" cy="379" r="12" fill="#93c5fd" stroke="#3b82f6" stroke-width="1"/>
+        <!-- Row 4 -->
+        <circle cx="393" cy="407" r="12" fill="#bfdbfe" stroke="#60a5fa" stroke-width="1"/>
+        <circle cx="421" cy="407" r="12" fill="#fbbf24" stroke="#f59e0b" stroke-width="1.5"/>
+        <circle cx="449" cy="407" r="12" fill="#f97316" stroke="#ea580c" stroke-width="2"/>
+        <circle cx="477" cy="407" r="14" fill="#dc2626" stroke="#991b1b" stroke-width="2"/>
+        <circle cx="505" cy="407" r="12" fill="#f97316" stroke="#ea580c" stroke-width="2"/>
+        <circle cx="533" cy="407" r="12" fill="#fbbf24" stroke="#f59e0b" stroke-width="1.5"/>
+        <circle cx="561" cy="407" r="12" fill="#bfdbfe" stroke="#60a5fa" stroke-width="1"/>
+        <!-- Row 5 -->
+        <circle cx="393" cy="435" r="12" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+        <circle cx="421" cy="435" r="12" fill="#bfdbfe" stroke="#60a5fa" stroke-width="1"/>
+        <circle cx="449" cy="435" r="12" fill="#fbbf24" stroke="#f59e0b" stroke-width="1.5"/>
+        <circle cx="477" cy="435" r="12" fill="#f97316" stroke="#ea580c" stroke-width="1.5"/>
+        <circle cx="505" cy="435" r="12" fill="#fbbf24" stroke="#f59e0b" stroke-width="1.5"/>
+        <circle cx="533" cy="435" r="12" fill="#bfdbfe" stroke="#60a5fa" stroke-width="1"/>
+        <circle cx="561" cy="435" r="12" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+      </g>
+
+      <!-- Electrode icon above grid -->
+      <rect x="470" y="274" width="14" height="16" rx="3" fill="#94a3b8" stroke="#64748b" stroke-width="1"/>
+      <text x="477" y="271" text-anchor="middle" font-size="8.5" fill="#475569" font-weight="700">⚡ DBS</text>
+      <line x1="477" y1="290" x2="477" y2="295" stroke="#64748b" stroke-width="1.5" stroke-dasharray="2,1"/>
+
+      <!-- Gaussian equation -->
+      <rect x="595" y="295" width="140" height="80" rx="8" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5"/>
+      <text x="665" y="313" text-anchor="middle" font-size="10" font-weight="700" fill="#9a3412">Gaussian Formula:</text>
+      <text x="665" y="330" text-anchor="middle" font-size="10" fill="#7c2d12">w(i,j) = A · exp(</text>
+      <text x="665" y="345" text-anchor="middle" font-size="10" fill="#7c2d12">−(dist²) / 2σ²)</text>
+      <text x="665" y="362" text-anchor="middle" font-size="9" fill="#92400e">σ = spread, A = amplitude</text>
+      <text x="665" y="375" text-anchor="middle" font-size="9" fill="#92400e">dist = distance from center</text>
+
+      <!-- Color scale -->
+      <text x="620" y="420" font-size="9.5" fill="#374151" font-weight="600">Stimulus strength:</text>
+      <rect x="619" y="426" width="18" height="12" rx="2" fill="#7f1d1d"/>
+      <text x="642" y="436" font-size="9" fill="#374151">Max (center)</text>
+      <rect x="619" y="442" width="18" height="12" rx="2" fill="#f97316"/>
+      <text x="642" y="452" font-size="9" fill="#374151">Medium</text>
+      <rect x="619" y="458" width="18" height="12" rx="2" fill="#bfdbfe"/>
+      <text x="642" y="468" font-size="9" fill="#374151">Minimal (far)</text>
+    </svg>
+
+    <p class="caption">
+      The DBS electrode delivers biphasic pulses (+ then −) to avoid charge buildup in tissue. The pulse spreads across the neuron grid like a bell curve — neurons near the electrode get a strong kick, those far away barely feel it.
+    </p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ PANEL 3 -->
+<div id="panel-flow" class="panel">
+  <div class="card">
+    <div class="section-label">Diagram 3</div>
+    <div class="section-title">How the Simulation Works — Step by Step</div>
+
+    <svg viewBox="0 0 780 880" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:820px;display:block;margin:0 auto;">
+      <defs>
+        <marker id="farr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#475569"/>
+        </marker>
+        <marker id="farr_loop" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#7c3aed"/>
+        </marker>
+        <marker id="farr_yes" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#16a34a"/>
+        </marker>
+        <marker id="farr_no" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#dc2626"/>
+        </marker>
+      </defs>
+
+      <!-- ── STEP 0: Load Parameters ── -->
+      <rect x="240" y="20" width="300" height="50" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+      <text x="390" y="41" text-anchor="middle" font-size="13" font-weight="700" fill="#0c4a6e">① Load Parameters</text>
+      <text x="390" y="58" text-anchor="middle" font-size="10.5" fill="#0369a1">frequencies, strengths, DBS settings, time</text>
+
+      <!-- Arrow down -->
+      <line x1="390" y1="70" x2="390" y2="100" stroke="#475569" stroke-width="2" marker-end="url(#farr)"/>
+
+      <!-- ── STEP 1: Initialise ── -->
+      <rect x="240" y="100" width="300" height="55" rx="10" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+      <text x="390" y="121" text-anchor="middle" font-size="13" font-weight="700" fill="#14532d">② Initialise Neurons</text>
+      <text x="390" y="137" text-anchor="middle" font-size="10.5" fill="#166534">Set V=0, U=0 for all STN &amp; GPe neurons</text>
+      <text x="390" y="150" text-anchor="middle" font-size="10.5" fill="#166534">Generate random connection weights (sparse)</text>
+
+      <line x1="390" y1="155" x2="390" y2="185" stroke="#475569" stroke-width="2" marker-end="url(#farr)"/>
+
+      <!-- ── DBS check ── -->
+      <!-- Diamond -->
+      <polygon points="390,185 470,220 390,255 310,220" fill="#fef9c3" stroke="#d97706" stroke-width="2"/>
+      <text x="390" y="216" text-anchor="middle" font-size="12" font-weight="700" fill="#92400e">DBS</text>
+      <text x="390" y="232" text-anchor="middle" font-size="10" fill="#92400e">enabled?</text>
+
+      <!-- Yes → generate pulse -->
+      <line x1="470" y1="220" x2="560" y2="220" stroke="#16a34a" stroke-width="2" marker-end="url(#farr_yes)"/>
+      <text x="512" y="213" text-anchor="middle" font-size="10" font-weight="700" fill="#16a34a">YES</text>
+      <rect x="560" y="195" width="165" height="50" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+      <text x="642" y="215" text-anchor="middle" font-size="10.5" font-weight="700" fill="#14532d">Generate DBS signal</text>
+      <text x="642" y="229" text-anchor="middle" font-size="9.5" fill="#166534">biphasic pulses at set freq</text>
+      <text x="642" y="241" text-anchor="middle" font-size="9.5" fill="#166534">+ Gaussian spread weights</text>
+
+      <!-- No → zeros -->
+      <line x1="310" y1="220" x2="50" y2="220" stroke="#dc2626" stroke-width="2" marker-end="url(#farr_no)"/>
+      <text x="180" y="213" text-anchor="middle" font-size="10" font-weight="700" fill="#dc2626">NO</text>
+      <rect x="20" y="195" width="130" height="36" rx="8" fill="#fff1f2" stroke="#dc2626" stroke-width="1.5"/>
+      <text x="85" y="211" text-anchor="middle" font-size="10.5" font-weight="700" fill="#b91c1c">DBS = zeros</text>
+      <text x="85" y="224" text-anchor="middle" font-size="9.5" fill="#9f1239">(no stimulation)</text>
+
+      <!-- Both converge down -->
+      <line x1="642" y1="245" x2="642" y2="280" stroke="#475569" stroke-width="1.5"/>
+      <line x1="642" y1="280" x2="390" y2="280" stroke="#475569" stroke-width="1.5"/>
+      <line x1="85" y1="231" x2="85" y2="280" stroke="#475569" stroke-width="1.5"/>
+      <line x1="85" y1="280" x2="390" y2="280" stroke="#475569" stroke-width="1.5"/>
+      <line x1="390" y1="280" x2="390" y2="300" stroke="#475569" stroke-width="2" marker-end="url(#farr)"/>
+
+      <!-- ══════════════ TIME LOOP BOX ══════════════ -->
+      <rect x="30" y="300" width="720" height="440" rx="14" fill="#faf5ff" stroke="#7c3aed" stroke-width="2.5" stroke-dasharray="8,4"/>
+      <text x="390" y="323" text-anchor="middle" font-size="13" font-weight="700" fill="#6d28d9">③ TIME LOOP — repeat for every simulation step (dt)</text>
+
+      <!-- ── GPe update ── -->
+      <rect x="80" y="340" width="280" height="120" rx="10" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+      <text x="220" y="360" text-anchor="middle" font-size="12" font-weight="700" fill="#1e3a8a">④ Update GPe</text>
+      <text x="220" y="377" text-anchor="middle" font-size="10" fill="#1e40af">Compute synaptic currents:</text>
+      <text x="220" y="392" text-anchor="middle" font-size="10" fill="#1d4ed8">  · GABA (from other GPe neurons)</text>
+      <text x="220" y="406" text-anchor="middle" font-size="10" fill="#1d4ed8">  · AMPA + NMDA (from STN)</text>
+      <text x="220" y="420" text-anchor="middle" font-size="10" fill="#1d4ed8">  · D2 striatal input</text>
+      <text x="220" y="436" text-anchor="middle" font-size="10" fill="#1e3a8a">→ Update V_gpe, U_gpe (Izhikevich)</text>
+      <text x="220" y="450" text-anchor="middle" font-size="10" fill="#1e3a8a">→ Detect spikes, reset voltage</text>
+
+      <!-- Arrow right GPe → STN -->
+      <line x1="360" y1="400" x2="420" y2="400" stroke="#475569" stroke-width="2" marker-end="url(#farr)"/>
+
+      <!-- ── STN update ── -->
+      <rect x="420" y="340" width="280" height="130" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+      <text x="560" y="360" text-anchor="middle" font-size="12" font-weight="700" fill="#78350f">⑤ Update STN</text>
+      <text x="560" y="377" text-anchor="middle" font-size="10" fill="#92400e">Compute synaptic currents:</text>
+      <text x="560" y="392" text-anchor="middle" font-size="10" fill="#b45309">  · GABA (from GPe)</text>
+      <text x="560" y="406" text-anchor="middle" font-size="10" fill="#b45309">  · AMPA + NMDA (from other STN)</text>
+      <text x="560" y="420" text-anchor="middle" font-size="10" fill="#b45309">  · DBS current × Gaussian weight</text>
+      <text x="560" y="436" text-anchor="middle" font-size="10" fill="#78350f">→ Update V_stn, U_stn (Izhikevich)</text>
+      <text x="560" y="450" text-anchor="middle" font-size="10" fill="#78350f">→ Detect spikes, reset voltage</text>
+      <text x="560" y="464" text-anchor="middle" font-size="9.5" fill="#92400e">+ add noise: σ × randn()</text>
+
+      <!-- Arrow down to LFP -->
+      <line x1="390" y1="470" x2="390" y2="500" stroke="#475569" stroke-width="2" marker-end="url(#farr)"/>
+
+      <!-- ── Record ── -->
+      <rect x="240" y="500" width="300" height="55" rx="10" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+      <text x="390" y="521" text-anchor="middle" font-size="12" font-weight="700" fill="#14532d">⑥ Record Outputs</text>
+      <text x="390" y="537" text-anchor="middle" font-size="10" fill="#166534">LFP = weighted sum of synaptic currents</text>
+      <text x="390" y="550" text-anchor="middle" font-size="10" fill="#166534">Store spike times, voltages</text>
+
+      <line x1="390" y1="555" x2="390" y2="585" stroke="#475569" stroke-width="2" marker-end="url(#farr)"/>
+
+      <!-- ── Loop check ── -->
+      <polygon points="390,585 480,618 390,650 300,618" fill="#f3e8ff" stroke="#7c3aed" stroke-width="2"/>
+      <text x="390" y="613" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6d28d9">More time</text>
+      <text x="390" y="630" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6d28d9">steps left?</text>
+
+      <!-- Loop back -->
+      <line x1="300" y1="618" x2="50" y2="618" stroke="#7c3aed" stroke-width="2"/>
+      <line x1="50" y1="618" x2="50" y2="400" stroke="#7c3aed" stroke-width="2" marker-end="url(#farr_loop)"/>
+      <text x="45" y="510" text-anchor="middle" font-size="11" font-weight="700" fill="#7c3aed" transform="rotate(-90,45,510)">LOOP BACK (YES)</text>
+      <!-- Connect loop back to GPe box left edge -->
+      <line x1="50" y1="400" x2="80" y2="400" stroke="#7c3aed" stroke-width="2" marker-end="url(#farr_loop)"/>
+
+      <!-- Done arrow -->
+      <line x1="480" y1="618" x2="720" y2="618" stroke="#dc2626" stroke-width="2"/>
+      <text x="600" y="611" text-anchor="middle" font-size="10" font-weight="700" fill="#dc2626">DONE (NO)</text>
+      <line x1="720" y1="618" x2="720" y2="680" stroke="#dc2626" stroke-width="2" marker-end="url(#farr_no)"/>
+
+      <!-- End loop box label -->
+      <text x="50" y="750" text-anchor="start" font-size="10.5" font-style="italic" fill="#6d28d9">Each time step is dt ms (e.g. 0.05 ms)</text>
+      <text x="50" y="766" text-anchor="start" font-size="10.5" font-style="italic" fill="#6d28d9">The loop runs thousands of times to simulate seconds of brain activity</text>
+
+      <!-- ══════════════ ── END LOOP ──  ══════════════ -->
+
+      <!-- ── STEP 7: Return Results ── -->
+      <rect x="580" y="680" width="280" height="70" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+      <text x="720" y="705" text-anchor="middle" font-size="13" font-weight="700" fill="#0c4a6e">⑦ Return Results</text>
+      <text x="720" y="722" text-anchor="middle" font-size="10.5" fill="#0369a1">Spike trains, LFP signals,</text>
+      <text x="720" y="737" text-anchor="middle" font-size="10.5" fill="#0369a1">voltage traces → analysis &amp; plots</text>
+
+    </svg>
+
+    <p class="caption">
+      The simulation advances time in tiny steps (dt ≈ 0.05 ms). At each step, every neuron's voltage is updated based on what it receives from its neighbours and any DBS current. If voltage crosses +30 mV, the neuron "fires" (spike) and resets. The LFP (local field potential) captures the collective electrical chatter of the whole region.
+    </p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ PANEL 4 -->
+<div id="panel-analysis" class="panel">
+  <div class="card">
+    <div class="section-label">Diagram 4</div>
+    <div class="section-title">Analysis: What the Model Tells Us — Normal vs Parkinson's (PD)</div>
+
+    <!-- ── PART 0: LFP Primer ── -->
+    <svg viewBox="0 0 780 190" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:820px;display:block;margin:0 auto 4px;">
+      <defs>
+        <marker id="a0" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#475569"/>
+        </marker>
+      </defs>
+
+      <!-- Title bar -->
+      <rect x="0" y="0" width="780" height="32" rx="8" fill="#1e293b"/>
+      <text x="390" y="21" text-anchor="middle" font-size="13" font-weight="700" fill="#f8fafc">What is LFP? — Local Field Potential</text>
+
+      <!-- Brain region -->
+      <ellipse cx="90" cy="110" rx="68" ry="55" fill="#fef9ee" stroke="#d1b87a" stroke-width="1.5"/>
+      <text x="90" y="92" text-anchor="middle" font-size="10" font-weight="700" fill="#92400e">STN region</text>
+      <!-- mini neurons -->
+      <circle cx="68"  cy="108" r="8" fill="#f59e0b" stroke="#d97706" stroke-width="1.2"/>
+      <circle cx="90"  cy="100" r="8" fill="#f59e0b" stroke="#d97706" stroke-width="1.2"/>
+      <circle cx="112" cy="108" r="8" fill="#3b82f6" stroke="#2563eb" stroke-width="1.2"/>
+      <circle cx="78"  cy="122" r="8" fill="#3b82f6" stroke="#2563eb" stroke-width="1.2"/>
+      <circle cx="102" cy="122" r="8" fill="#f59e0b" stroke="#d97706" stroke-width="1.2"/>
+      <!-- electrode -->
+      <rect x="86" y="52" width="8" height="36" rx="3" fill="#94a3b8" stroke="#64748b" stroke-width="1"/>
+      <rect x="84" y="84" width="12" height="6" rx="2" fill="#ef4444"/>
+      <text x="110" y="60" font-size="9" fill="#475569" font-weight="600">electrode</text>
+      <line x1="106" y1="61" x2="97" y2="66" stroke="#475569" stroke-width="1"/>
+
+      <!-- Arrow right to signal -->
+      <line x1="160" y1="110" x2="195" y2="110" stroke="#475569" stroke-width="2" marker-end="url(#a0)"/>
+      <text x="177" y="104" text-anchor="middle" font-size="9" fill="#475569">records</text>
+
+      <!-- LFP signal trace -->
+      <rect x="198" y="48" width="210" height="120" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2"/>
+      <text x="303" y="68" text-anchor="middle" font-size="10.5" font-weight="700" fill="#374151">LFP Signal (raw)</text>
+      <text x="303" y="82" text-anchor="middle" font-size="9" fill="#64748b">mV vs time</text>
+      <!-- axes -->
+      <line x1="215" y1="148" x2="395" y2="148" stroke="#94a3b8" stroke-width="1" marker-end="url(#a0)"/>
+      <line x1="215" y1="148" x2="215" y2="90" stroke="#94a3b8" stroke-width="1" marker-end="url(#a0)"/>
+      <text x="396" y="151" font-size="8" fill="#94a3b8">t</text>
+      <text x="210" y="88" font-size="8" fill="#94a3b8" text-anchor="end">mV</text>
+      <!-- LFP wiggly trace -->
+      <path d="M218,128 Q224,115 230,128 Q237,142 244,120 Q250,100 257,125 Q263,148 270,118 Q277,92 284,122 Q290,148 297,115 Q303,88 310,120 Q317,148 324,110 Q330,80 337,118 Q344,148 351,112 Q358,85 365,120 Q372,148 380,115 Q386,92 392,128"
+            stroke="#2563eb" stroke-width="1.8" fill="none"/>
+      <text x="303" y="165" text-anchor="middle" font-size="9" fill="#64748b">collective electrical "hum" of nearby neurons</text>
+
+      <!-- Arrow to FFT -->
+      <line x1="410" y1="110" x2="445" y2="110" stroke="#475569" stroke-width="2" marker-end="url(#a0)"/>
+      <text x="427" y="103" text-anchor="middle" font-size="9" fill="#7c3aed" font-weight="700">FFT</text>
+
+      <!-- Spectrum box -->
+      <rect x="448" y="48" width="200" height="120" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2"/>
+      <text x="548" y="68" text-anchor="middle" font-size="10.5" font-weight="700" fill="#374151">Power Spectrum</text>
+      <text x="548" y="82" text-anchor="middle" font-size="9" fill="#64748b">power vs frequency</text>
+      <line x1="462" y1="148" x2="635" y2="148" stroke="#94a3b8" stroke-width="1" marker-end="url(#a0)"/>
+      <line x1="462" y1="148" x2="462" y2="90" stroke="#94a3b8" stroke-width="1" marker-end="url(#a0)"/>
+      <text x="636" y="151" font-size="8" fill="#94a3b8">Hz</text>
+      <text x="456" y="88" font-size="8" fill="#94a3b8" text-anchor="end">P</text>
+      <!-- Freq labels -->
+      <text x="480" y="158" text-anchor="middle" font-size="8" fill="#94a3b8">0</text>
+      <text x="522" y="158" text-anchor="middle" font-size="8" fill="#dc2626">β 13-30</text>
+      <text x="600" y="158" text-anchor="middle" font-size="8" fill="#94a3b8">100</text>
+      <!-- A broad normal spectrum drawn in blue -->
+      <path d="M462,145 Q475,140 490,130 Q505,122 522,118 Q540,115 558,120 Q580,128 600,138 Q618,143 632,146"
+            stroke="#16a34a" stroke-width="2" fill="none" opacity="0.6" stroke-dasharray="5,3"/>
+      <!-- A PD peaked spectrum -->
+      <path d="M462,145 Q475,143 490,142 Q505,141 516,138 Q519,120 522,90 Q525,120 528,138 Q545,142 570,143 Q600,144 632,145"
+            stroke="#dc2626" stroke-width="2" fill="none"/>
+      <text x="522" y="95" text-anchor="middle" font-size="8.5" fill="#dc2626" font-weight="700">PD: beta peak</text>
+      <text x="590" y="132" font-size="8" fill="#16a34a">Normal</text>
+
+      <!-- Explanation box right -->
+      <rect x="668" y="40" width="108" height="140" rx="8" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.2"/>
+      <text x="722" y="57" text-anchor="middle" font-size="9.5" font-weight="700" fill="#9a3412">LFP = weighted</text>
+      <text x="722" y="70" text-anchor="middle" font-size="9.5" font-weight="700" fill="#9a3412">sum of I_syn</text>
+      <text x="722" y="87" text-anchor="middle" font-size="9" fill="#7c2d12">for each timestep:</text>
+      <text x="722" y="101" text-anchor="middle" font-size="9" fill="#7c2d12">LFP = Σ (I · d)</text>
+      <text x="722" y="115" text-anchor="middle" font-size="8.5" fill="#92400e">d = distance weight</text>
+      <text x="722" y="132" text-anchor="middle" font-size="8.5" fill="#92400e">from electrode</text>
+      <text x="722" y="149" text-anchor="middle" font-size="8.5" fill="#92400e">Closer neurons</text>
+      <text x="722" y="162" text-anchor="middle" font-size="8.5" fill="#92400e">contribute more</text>
+    </svg>
+
+    <!-- ════════════════════════════════════════
+         MEASURE 1 — SPECTRAL ENTROPY
+    ════════════════════════════════════════ -->
+    <svg viewBox="0 0 780 270" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:820px;display:block;margin:8px auto;">
+      <defs>
+        <marker id="a1" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L7,3 z" fill="#475569"/>
+        </marker>
+      </defs>
+
+      <!-- Header -->
+      <rect x="0" y="0" width="780" height="32" rx="8" fill="#4f46e5"/>
+      <text x="20" y="21" font-size="13" font-weight="700" fill="#fff">① Spectral Entropy of LFP</text>
+      <text x="760" y="21" text-anchor="end" font-size="11" fill="#c7d2fe">Formula: SE = −Σ p(f) · log p(f),  normalised to [0,1]</text>
+
+      <!-- ── NORMAL panel ── -->
+      <rect x="10" y="40" width="365" height="220" rx="10" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+      <text x="192" y="62" text-anchor="middle" font-size="12.5" font-weight="700" fill="#14532d">Normal Brain</text>
+      <text x="192" y="78" text-anchor="middle" font-size="10" fill="#166534">Power spread across many frequencies → HIGH entropy</text>
+
+      <!-- Axes -->
+      <line x1="45" y1="215" x2="355" y2="215" stroke="#94a3b8" stroke-width="1.2" marker-end="url(#a1)"/>
+      <line x1="45" y1="215" x2="45"  y2="95"  stroke="#94a3b8" stroke-width="1.2" marker-end="url(#a1)"/>
+      <text x="357" y="218" font-size="9" fill="#475569">Hz</text>
+      <text x="38"  y="93"  font-size="9" fill="#475569" text-anchor="end">Power</text>
+
+      <!-- Freq band labels -->
+      <text x="70"  y="228" text-anchor="middle" font-size="8.5" fill="#64748b">δ 0-4</text>
+      <text x="110" y="228" text-anchor="middle" font-size="8.5" fill="#64748b">θ 4-8</text>
+      <text x="155" y="228" text-anchor="middle" font-size="8.5" fill="#64748b">α 8-13</text>
+      <text x="210" y="228" text-anchor="middle" font-size="8.5" fill="#64748b">β 13-30</text>
+      <text x="280" y="228" text-anchor="middle" font-size="8.5" fill="#64748b">γ 30-100</text>
+
+      <!-- Normal spectrum: broad, roughly flat with small bumps — green -->
+      <path d="M48,205 Q58,185 70,178 Q85,172 100,175 Q118,178 135,170 Q152,162 170,165 Q190,168 210,163 Q230,158 255,162 Q275,166 300,170 Q325,175 345,192 Q350,200 355,210"
+            stroke="#16a34a" stroke-width="2.5" fill="#bbf7d0" fill-opacity="0.4"/>
+
+      <!-- Entropy label -->
+      <rect x="55" y="97" width="140" height="30" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.2"/>
+      <text x="125" y="111" text-anchor="middle" font-size="10.5" font-weight="700" fill="#14532d">Entropy ≈ 0.80</text>
+      <text x="125" y="123" text-anchor="middle" font-size="9" fill="#166534">spread → high disorder</text>
+
+      <!-- ── PD panel ── -->
+      <rect x="405" y="40" width="365" height="220" rx="10" fill="#fff1f2" stroke="#dc2626" stroke-width="2"/>
+      <text x="587" y="62" text-anchor="middle" font-size="12.5" font-weight="700" fill="#991b1b">Parkinson's Disease (PD)</text>
+      <text x="587" y="78" text-anchor="middle" font-size="10" fill="#b91c1c">Power dominated by beta band (13–30 Hz) → LOW entropy</text>
+
+      <!-- Axes -->
+      <line x1="435" y1="215" x2="748" y2="215" stroke="#94a3b8" stroke-width="1.2" marker-end="url(#a1)"/>
+      <line x1="435" y1="215" x2="435" y2="95"  stroke="#94a3b8" stroke-width="1.2" marker-end="url(#a1)"/>
+      <text x="750" y="218" font-size="9" fill="#475569">Hz</text>
+      <text x="428" y="93"  font-size="9" fill="#475569" text-anchor="end">Power</text>
+
+      <!-- Freq band labels -->
+      <text x="460" y="228" text-anchor="middle" font-size="8.5" fill="#64748b">δ 0-4</text>
+      <text x="500" y="228" text-anchor="middle" font-size="8.5" fill="#64748b">θ 4-8</text>
+      <text x="543" y="228" text-anchor="middle" font-size="8.5" fill="#64748b">α 8-13</text>
+      <text x="600" y="228" text-anchor="middle" font-size="8.5" fill="#dc2626" font-weight="700">β 13-30</text>
+      <text x="700" y="228" text-anchor="middle" font-size="8.5" fill="#64748b">γ 30-100</text>
+
+      <!-- PD spectrum: flat baseline with big beta spike — red -->
+      <!-- flat low baseline -->
+      <path d="M438,210 Q450,208 468,207 Q490,206 510,205 Q528,204 538,203"
+            stroke="#dc2626" stroke-width="2" fill="none"/>
+      <!-- big beta peak -->
+      <path d="M538,203 Q548,185 558,150 Q565,115 572,100 Q578,115 585,150 Q592,180 600,203"
+            stroke="#dc2626" stroke-width="2" fill="#fecaca" fill-opacity="0.5"/>
+      <!-- tail after peak -->
+      <path d="M600,203 Q620,207 650,208 Q690,209 740,210"
+            stroke="#dc2626" stroke-width="2" fill="none"/>
+
+      <!-- Peak annotation -->
+      <line x1="572" y1="100" x2="572" y2="88" stroke="#dc2626" stroke-width="1.2"/>
+      <text x="572" y="84" text-anchor="middle" font-size="9.5" fill="#dc2626" font-weight="700">β peak</text>
+
+      <!-- Entropy label -->
+      <rect x="635" y="97" width="140" height="30" rx="6" fill="#fee2e2" stroke="#dc2626" stroke-width="1.2"/>
+      <text x="705" y="111" text-anchor="middle" font-size="10.5" font-weight="700" fill="#991b1b">Entropy ≈ 0.25</text>
+      <text x="705" y="123" text-anchor="middle" font-size="9" fill="#b91c1c">peaked → predictable</text>
+
+      <!-- Band power annotation -->
+      <rect x="420" y="126" width="200" height="46" rx="6" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.2"/>
+      <text x="520" y="142" text-anchor="middle" font-size="9.5" font-weight="700" fill="#9a3412">Also computed: β band power</text>
+      <text x="520" y="156" text-anchor="middle" font-size="9" fill="#7c2d12">Low-β: 8.5–16.5 Hz</text>
+      <text x="520" y="168" text-anchor="middle" font-size="9" fill="#7c2d12">High-β: 19.5–27.5 Hz   Full-β: 12.5–30.5 Hz</text>
+    </svg>
+
+    <!-- ════════════════════════════════════════
+         MEASURE 2 — SYNCHRONY
+    ════════════════════════════════════════ -->
+    <svg viewBox="0 0 780 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:820px;display:block;margin:8px auto;">
+      <defs>
+        <marker id="a2" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L7,3 z" fill="#475569"/>
+        </marker>
+      </defs>
+
+      <!-- Header -->
+      <rect x="0" y="0" width="780" height="32" rx="8" fill="#0f766e"/>
+      <text x="20" y="21" font-size="13" font-weight="700" fill="#fff">② Synchrony — Kuramoto Order Parameter R</text>
+      <text x="760" y="21" text-anchor="end" font-size="11" fill="#99f6e4">R = |mean(e^(iφ))| where φ = neuron phase.   R near 0 = random,  R near 1 = all in sync</text>
+
+      <!-- ── NORMAL ── -->
+      <rect x="10" y="42" width="365" height="248" rx="10" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+      <text x="192" y="64" text-anchor="middle" font-size="12.5" font-weight="700" fill="#14532d">Normal Brain</text>
+      <text x="192" y="80" text-anchor="middle" font-size="10" fill="#166534">Neurons fire at their own pace → phases scattered → R low</text>
+
+      <!-- Phase circle normal -->
+      <circle cx="142" cy="185" r="85" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+      <line x1="142" y1="185" x2="227" y2="185" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="3,2"/>
+      <line x1="142" y1="185" x2="142" y2="100" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="3,2"/>
+      <text x="142" y="282" text-anchor="middle" font-size="9.5" fill="#64748b">Phase circle (each dot = one neuron's phase)</text>
+
+      <!-- Scattered dots around the circle — normal -->
+      <circle cx="222" cy="178" r="4" fill="#16a34a" opacity="0.85"/>
+      <circle cx="208" cy="220" r="4" fill="#16a34a" opacity="0.85"/>
+      <circle cx="180" cy="255" r="4" fill="#16a34a" opacity="0.85"/>
+      <circle cx="142" cy="268" r="4" fill="#16a34a" opacity="0.85"/>
+      <circle cx="100" cy="252" r="4" fill="#16a34a" opacity="0.85"/>
+      <circle cx="70"  cy="220" r="4" fill="#16a34a" opacity="0.85"/>
+      <circle cx="58"  cy="182" r="4" fill="#16a34a" opacity="0.85"/>
+      <circle cx="72"  cy="145" r="4" fill="#16a34a" opacity="0.85"/>
+      <circle cx="105" cy="115" r="4" fill="#16a34a" opacity="0.85"/>
+      <circle cx="142" cy="100" r="4" fill="#16a34a" opacity="0.85"/>
+      <circle cx="175" cy="108" r="4" fill="#16a34a" opacity="0.85"/>
+      <circle cx="202" cy="130" r="4" fill="#16a34a" opacity="0.85"/>
+      <!-- Mean vector — short, pointing somewhere random -->
+      <line x1="142" y1="185" x2="155" y2="171" stroke="#374151" stroke-width="2.5" marker-end="url(#a2)"/>
+      <text x="162" y="163" font-size="9.5" fill="#374151" font-weight="700">R ≈ 0.15</text>
+      <text x="162" y="175" font-size="8.5" fill="#475569">(short vector)</text>
+
+      <!-- Raster for normal -->
+      <rect x="240" y="90" width="125" height="170" rx="6" fill="#fff" stroke="#d1d5db" stroke-width="1"/>
+      <text x="302" y="107" text-anchor="middle" font-size="9.5" font-weight="700" fill="#374151">Spike Raster</text>
+      <text x="302" y="119" text-anchor="middle" font-size="8.5" fill="#64748b">(each row = neuron)</text>
+      <line x1="248" y1="245" x2="358" y2="245" stroke="#94a3b8" stroke-width="1"/>
+      <text x="356" y="253" font-size="8" fill="#94a3b8">t</text>
+      <!-- random spike dots across rows — normal (asynchronous) -->
+      <circle cx="258" cy="135" r="2" fill="#374151"/>
+      <circle cx="280" cy="148" r="2" fill="#374151"/>
+      <circle cx="295" cy="130" r="2" fill="#374151"/>
+      <circle cx="310" cy="155" r="2" fill="#374151"/>
+      <circle cx="325" cy="138" r="2" fill="#374151"/>
+      <circle cx="345" cy="143" r="2" fill="#374151"/>
+      <circle cx="263" cy="160" r="2" fill="#374151"/>
+      <circle cx="289" cy="170" r="2" fill="#374151"/>
+      <circle cx="305" cy="158" r="2" fill="#374151"/>
+      <circle cx="318" cy="175" r="2" fill="#374151"/>
+      <circle cx="340" cy="163" r="2" fill="#374151"/>
+      <circle cx="255" cy="185" r="2" fill="#374151"/>
+      <circle cx="274" cy="195" r="2" fill="#374151"/>
+      <circle cx="298" cy="188" r="2" fill="#374151"/>
+      <circle cx="315" cy="200" r="2" fill="#374151"/>
+      <circle cx="338" cy="192" r="2" fill="#374151"/>
+      <circle cx="260" cy="215" r="2" fill="#374151"/>
+      <circle cx="285" cy="225" r="2" fill="#374151"/>
+      <circle cx="308" cy="218" r="2" fill="#374151"/>
+      <circle cx="328" cy="232" r="2" fill="#374151"/>
+      <circle cx="350" cy="220" r="2" fill="#374151"/>
+      <text x="302" y="260" text-anchor="middle" font-size="8.5" fill="#16a34a" font-weight="600">Asynchronous — scattered</text>
+
+      <!-- R value big label -->
+      <rect x="50" y="265" width="175" height="28" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+      <text x="137" y="283" text-anchor="middle" font-size="11" font-weight="700" fill="#14532d">Synchrony R ≈ LOW (0.1–0.2)</text>
+
+      <!-- ── PD ── -->
+      <rect x="405" y="42" width="365" height="248" rx="10" fill="#fff1f2" stroke="#dc2626" stroke-width="2"/>
+      <text x="587" y="64" text-anchor="middle" font-size="12.5" font-weight="700" fill="#991b1b">Parkinson's Disease (PD)</text>
+      <text x="587" y="80" text-anchor="middle" font-size="10" fill="#b91c1c">Neurons fire together in bursts → phases cluster → R high</text>
+
+      <!-- Phase circle PD -->
+      <circle cx="530" cy="185" r="85" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+      <line x1="530" y1="185" x2="615" y2="185" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="3,2"/>
+      <line x1="530" y1="185" x2="530" y2="100" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="3,2"/>
+      <text x="530" y="282" text-anchor="middle" font-size="9.5" fill="#64748b">Phase circle (each dot = one neuron's phase)</text>
+
+      <!-- Clustered dots — PD, mostly at ~45 deg (upper right) -->
+      <circle cx="595" cy="140" r="4" fill="#dc2626" opacity="0.9"/>
+      <circle cx="602" cy="155" r="4" fill="#dc2626" opacity="0.9"/>
+      <circle cx="597" cy="168" r="4" fill="#dc2626" opacity="0.9"/>
+      <circle cx="590" cy="148" r="4" fill="#dc2626" opacity="0.9"/>
+      <circle cx="605" cy="145" r="4" fill="#dc2626" opacity="0.9"/>
+      <circle cx="600" cy="132" r="4" fill="#dc2626" opacity="0.9"/>
+      <circle cx="610" cy="158" r="4" fill="#dc2626" opacity="0.9"/>
+      <circle cx="593" cy="128" r="4" fill="#dc2626" opacity="0.9"/>
+      <circle cx="608" y="170" cx="608" cy="170" r="4" fill="#dc2626" opacity="0.9"/>
+      <circle cx="585" cy="138" r="4" fill="#dc2626" opacity="0.9"/>
+      <circle cx="614" cy="142" r="4" fill="#dc2626" opacity="0.9"/>
+      <circle cx="604" cy="162" r="4" fill="#dc2626" opacity="0.9"/>
+      <!-- Mean vector — long, pointing toward cluster -->
+      <line x1="530" y1="185" x2="590" y2="135" stroke="#374151" stroke-width="2.5" marker-end="url(#a2)"/>
+      <text x="608" y="126" font-size="9.5" fill="#374151" font-weight="700">R ≈ 0.80</text>
+      <text x="608" y="138" font-size="8.5" fill="#475569">(long vector)</text>
+
+      <!-- Raster PD -->
+      <rect x="630" y="90" width="130" height="170" rx="6" fill="#fff" stroke="#d1d5db" stroke-width="1"/>
+      <text x="695" y="107" text-anchor="middle" font-size="9.5" font-weight="700" fill="#374151">Spike Raster</text>
+      <text x="695" y="119" text-anchor="middle" font-size="8.5" fill="#64748b">(each row = neuron)</text>
+      <line x1="638" y1="245" x2="752" y2="245" stroke="#94a3b8" stroke-width="1"/>
+      <!-- Synchronous bursts — vertical columns of dots -->
+      <circle cx="652" cy="132" r="2" fill="#dc2626"/>
+      <circle cx="652" cy="148" r="2" fill="#dc2626"/>
+      <circle cx="652" cy="163" r="2" fill="#dc2626"/>
+      <circle cx="652" cy="178" r="2" fill="#dc2626"/>
+      <circle cx="652" cy="195" r="2" fill="#dc2626"/>
+      <circle cx="652" cy="212" r="2" fill="#dc2626"/>
+      <circle cx="652" cy="228" r="2" fill="#dc2626"/>
+      <circle cx="676" cy="132" r="2" fill="#dc2626"/>
+      <circle cx="676" cy="148" r="2" fill="#dc2626"/>
+      <circle cx="676" cy="163" r="2" fill="#dc2626"/>
+      <circle cx="676" cy="178" r="2" fill="#dc2626"/>
+      <circle cx="676" cy="195" r="2" fill="#dc2626"/>
+      <circle cx="676" cy="212" r="2" fill="#dc2626"/>
+      <circle cx="676" cy="228" r="2" fill="#dc2626"/>
+      <circle cx="700" cy="132" r="2" fill="#dc2626"/>
+      <circle cx="700" cy="148" r="2" fill="#dc2626"/>
+      <circle cx="700" cy="163" r="2" fill="#dc2626"/>
+      <circle cx="700" cy="178" r="2" fill="#dc2626"/>
+      <circle cx="700" cy="195" r="2" fill="#dc2626"/>
+      <circle cx="700" cy="212" r="2" fill="#dc2626"/>
+      <circle cx="700" cy="228" r="2" fill="#dc2626"/>
+      <circle cx="724" cy="132" r="2" fill="#dc2626"/>
+      <circle cx="724" cy="148" r="2" fill="#dc2626"/>
+      <circle cx="724" cy="163" r="2" fill="#dc2626"/>
+      <circle cx="724" cy="178" r="2" fill="#dc2626"/>
+      <circle cx="724" cy="195" r="2" fill="#dc2626"/>
+      <circle cx="724" cy="212" r="2" fill="#dc2626"/>
+      <circle cx="724" cy="228" r="2" fill="#dc2626"/>
+      <text x="695" y="260" text-anchor="middle" font-size="8.5" fill="#dc2626" font-weight="600">Synchronous — locked bursts</text>
+
+      <!-- R value big label PD -->
+      <rect x="430" y="265" width="175" height="28" rx="6" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5"/>
+      <text x="517" y="283" text-anchor="middle" font-size="11" font-weight="700" fill="#991b1b">Synchrony R ≈ HIGH (0.7–0.9)</text>
+    </svg>
+
+    <!-- ════════════════════════════════════════
+         MEASURE 3 — SPIKE RATE VARIANCE
+    ════════════════════════════════════════ -->
+    <svg viewBox="0 0 780 290" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:820px;display:block;margin:8px auto;">
+      <defs>
+        <marker id="a3" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L7,3 z" fill="#475569"/>
+        </marker>
+      </defs>
+
+      <!-- Header -->
+      <rect x="0" y="0" width="780" height="32" rx="8" fill="#b45309"/>
+      <text x="20" y="21" font-size="13" font-weight="700" fill="#fff">③ Spike Rate Variance Across Quadrants</text>
+      <text x="760" y="21" text-anchor="end" font-size="11" fill="#fde68a">Grid split into 4 quadrants (A/B/C/D). Rate computed per quadrant then STD measured.</text>
+
+      <!-- HOW it works box -->
+      <rect x="10" y="40" width="230" height="240" rx="10" fill="#fff7ed" stroke="#d97706" stroke-width="1.5"/>
+      <text x="125" y="60" text-anchor="middle" font-size="11" font-weight="700" fill="#92400e">How it's computed</text>
+      <!-- mini grid diagram -->
+      <rect x="30"  y="72" width="80" height="80" rx="4" fill="#fde68a" stroke="#d97706" stroke-width="1.5"/>
+      <rect x="110" y="72" width="80" height="80" rx="4" fill="#bbf7d0" stroke="#16a34a" stroke-width="1.5"/>
+      <rect x="30"  y="152" width="80" height="80" rx="4" fill="#bfdbfe" stroke="#2563eb" stroke-width="1.5"/>
+      <rect x="110" y="152" width="80" height="80" rx="4" fill="#fecaca" stroke="#dc2626" stroke-width="1.5"/>
+      <text x="70"  y="116" text-anchor="middle" font-size="18" font-weight="700" fill="#92400e">A</text>
+      <text x="150" y="116" text-anchor="middle" font-size="18" font-weight="700" fill="#14532d">B</text>
+      <text x="70"  y="196" text-anchor="middle" font-size="18" font-weight="700" fill="#1e3a8a">C</text>
+      <text x="150" y="196" text-anchor="middle" font-size="18" font-weight="700" fill="#991b1b">D</text>
+      <text x="125" y="245" text-anchor="middle" font-size="9" fill="#92400e">Neuron grid divided</text>
+      <text x="125" y="257" text-anchor="middle" font-size="9" fill="#92400e">into 4 equal quadrants</text>
+      <text x="125" y="272" text-anchor="middle" font-size="9.5" font-weight="700" fill="#b45309">STD of [rate_A, rate_B, rate_C, rate_D]</text>
+
+      <!-- ── NORMAL ── -->
+      <rect x="255" y="40" width="240" height="240" rx="10" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+      <text x="375" y="62" text-anchor="middle" font-size="12.5" font-weight="700" fill="#14532d">Normal Brain</text>
+      <text x="375" y="78" text-anchor="middle" font-size="9.5" fill="#166534">Regions fire at different rates → HIGH variance</text>
+
+      <!-- Normal grid: varied brightness per quadrant -->
+      <rect x="280" y="88"  width="90" height="90" rx="4" fill="#fde68a" stroke="#d97706" stroke-width="1.5" opacity="0.95"/>
+      <rect x="370" y="88"  width="90" height="90" rx="4" fill="#fef9c3" stroke="#d97706" stroke-width="1" opacity="0.5"/>
+      <rect x="280" y="178" width="90" height="90" rx="4" fill="#fde68a" stroke="#d97706" stroke-width="1" opacity="0.3"/>
+      <rect x="370" y="178" width="90" height="90" rx="4" fill="#fde68a" stroke="#d97706" stroke-width="1" opacity="0.85"/>
+
+      <text x="325" y="137" text-anchor="middle" font-size="13" font-weight="700" fill="#92400e">HIGH</text>
+      <text x="325" y="150" text-anchor="middle" font-size="10" fill="#92400e">rate=28Hz</text>
+      <text x="415" y="137" text-anchor="middle" font-size="13" font-weight="700" fill="#92400e" opacity="0.45">LOW</text>
+      <text x="415" y="150" text-anchor="middle" font-size="10" fill="#92400e" opacity="0.45">rate=8Hz</text>
+      <text x="325" y="227" text-anchor="middle" font-size="13" font-weight="700" fill="#92400e" opacity="0.28">LOW</text>
+      <text x="325" y="240" text-anchor="middle" font-size="10" fill="#92400e" opacity="0.28">rate=6Hz</text>
+      <text x="415" y="227" text-anchor="middle" font-size="13" font-weight="700" fill="#92400e" opacity="0.8">HIGH</text>
+      <text x="415" y="240" text-anchor="middle" font-size="10" fill="#92400e" opacity="0.8">rate=24Hz</text>
+
+      <rect x="270" y="252" width="210" height="22" rx="5" fill="#dcfce7" stroke="#16a34a" stroke-width="1.2"/>
+      <text x="375" y="267" text-anchor="middle" font-size="10.5" font-weight="700" fill="#14532d">Variance (STD) ≈ HIGH</text>
+
+      <!-- ── PD ── -->
+      <rect x="510" y="40" width="260" height="240" rx="10" fill="#fff1f2" stroke="#dc2626" stroke-width="2"/>
+      <text x="640" y="62" text-anchor="middle" font-size="12.5" font-weight="700" fill="#991b1b">Parkinson's Disease (PD)</text>
+      <text x="640" y="78" text-anchor="middle" font-size="9.5" fill="#b91c1c">All quadrants fire alike → LOW variance</text>
+
+      <!-- PD grid: all same colour (all high uniform) -->
+      <rect x="530" y="88"  width="100" height="90" rx="4" fill="#fca5a5" stroke="#dc2626" stroke-width="1.5" opacity="0.9"/>
+      <rect x="630" y="88"  width="100" height="90" rx="4" fill="#fca5a5" stroke="#dc2626" stroke-width="1.5" opacity="0.88"/>
+      <rect x="530" y="178" width="100" height="90" rx="4" fill="#fca5a5" stroke="#dc2626" stroke-width="1.5" opacity="0.92"/>
+      <rect x="630" y="178" width="100" height="90" rx="4" fill="#fca5a5" stroke="#dc2626" stroke-width="1.5" opacity="0.87"/>
+
+      <text x="580" y="133" text-anchor="middle" font-size="12" font-weight="700" fill="#991b1b">MED</text>
+      <text x="580" y="147" text-anchor="middle" font-size="9.5" fill="#991b1b">rate=18Hz</text>
+      <text x="680" y="133" text-anchor="middle" font-size="12" font-weight="700" fill="#991b1b">MED</text>
+      <text x="680" y="147" text-anchor="middle" font-size="9.5" fill="#991b1b">rate=17Hz</text>
+      <text x="580" y="223" text-anchor="middle" font-size="12" font-weight="700" fill="#991b1b">MED</text>
+      <text x="580" y="237" text-anchor="middle" font-size="9.5" fill="#991b1b">rate=19Hz</text>
+      <text x="680" y="223" text-anchor="middle" font-size="12" font-weight="700" fill="#991b1b">MED</text>
+      <text x="680" y="237" text-anchor="middle" font-size="9.5" fill="#991b1b">rate=18Hz</text>
+
+      <rect x="520" y="252" width="230" height="22" rx="5" fill="#fee2e2" stroke="#dc2626" stroke-width="1.2"/>
+      <text x="635" y="267" text-anchor="middle" font-size="10.5" font-weight="700" fill="#991b1b">Variance (STD) ≈ LOW</text>
+    </svg>
+
+    <!-- ── Summary table ── -->
+    <svg viewBox="0 0 780 100" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:820px;display:block;margin:8px auto 0;">
+      <rect x="0" y="0" width="780" height="100" rx="10" fill="#1e293b"/>
+      <text x="390" y="22" text-anchor="middle" font-size="12.5" font-weight="700" fill="#f8fafc">Summary: Normal vs PD</text>
+      <!-- headers -->
+      <text x="180" y="42" text-anchor="middle" font-size="11" font-weight="700" fill="#94a3b8">Measure</text>
+      <text x="430" y="42" text-anchor="middle" font-size="11" font-weight="700" fill="#86efac">Normal</text>
+      <text x="630" y="42" text-anchor="middle" font-size="11" font-weight="700" fill="#fca5a5">Parkinson's (PD)</text>
+      <line x1="20" y1="48" x2="760" y2="48" stroke="#334155" stroke-width="1"/>
+      <!-- row 1 -->
+      <text x="180" y="64" text-anchor="middle" font-size="10.5" fill="#cbd5e1">① Spectral Entropy (LFP)</text>
+      <text x="430" y="64" text-anchor="middle" font-size="11" font-weight="700" fill="#4ade80">HIGH  ↑ (≈0.80)</text>
+      <text x="630" y="64" text-anchor="middle" font-size="11" font-weight="700" fill="#f87171">LOW  ↓  (≈0.25)</text>
+      <!-- row 2 -->
+      <text x="180" y="78" text-anchor="middle" font-size="10.5" fill="#cbd5e1">② Synchrony R (spikes)</text>
+      <text x="430" y="78" text-anchor="middle" font-size="11" font-weight="700" fill="#4ade80">LOW  ↓  (≈0.15)</text>
+      <text x="630" y="78" text-anchor="middle" font-size="11" font-weight="700" fill="#f87171">HIGH  ↑ (≈0.80)</text>
+      <!-- row 3 -->
+      <text x="180" y="92" text-anchor="middle" font-size="10.5" fill="#cbd5e1">③ Rate Variance (grid)</text>
+      <text x="430" y="92" text-anchor="middle" font-size="11" font-weight="700" fill="#4ade80">HIGH  ↑</text>
+      <text x="630" y="92" text-anchor="middle" font-size="11" font-weight="700" fill="#f87171">LOW  ↓</text>
+    </svg>
+
+    <p class="caption" style="margin-top:10px;">
+      In PD, the STN–GPe loop gets "stuck" in a pathological rhythm — neurons lock into synchronised beta-band oscillations instead of firing independently. This is what DBS is designed to break by disrupting that locked rhythm and restoring healthier, more varied activity.
+    </p>
+  </div>
+</div>
+
+<script>
+function showTab(name) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>
