@@ -136,12 +136,17 @@ def run_condition(yaml_fname: str) -> dict:
     path    = os.path.join(STN_PARAM_DIR, yaml_fname)
     params  = load_yaml(path)
     results = STN_GPe_loop(path)
+    # return {
+    #     "spike": np.array(results["spike_stn"]),   # (T, N)
+    #     "lfp":   np.array(results["lfp_stn"]),      # (T,)
+    #     "dt":    float(params.get("dt", 0.1)),       # ms
+    # }
     return {
-        "spike": np.array(results["spike_stn"]),   # (T, N)
-        "lfp":   np.array(results["lfp_stn"]),      # (T,)
-        "dt":    float(params.get("dt", 0.1)),       # ms
+        "spike": np.array(results["spike_stn"]),
+        "lfp":   np.array(results["lfp_stn"]),
+        "v_stn": np.array(results["v_stn"]),    # ← added
+        "dt":    float(params.get("dt", 0.1)),
     }
-
 
 def preprocess(raw: dict) -> dict:
     """
@@ -451,3 +456,252 @@ if __name__ == "__main__":
     anim.save(OUTPUT_GIF, writer=writer, dpi=OUTPUT_DPI)
     print(f"\n✓  Saved → {OUTPUT_GIF}")
     plt.close(fig)
+
+    # ─────────────────────────────────────────────────────────────────────────────
+    #  SECOND GIF — Single-neuron voltage traces (scrolling oscilloscope)
+    #  Outputs: stn_voltage.gif  (same folder as the script)
+    # ─────────────────────────────────────────────────────────────────────────────
+
+    VOLT_OUTPUT_GIF = os.path.join(_HERE, "stn_voltage.gif")
+    VOLT_WINDOW_MS  = 300   # ms  – width of the visible scrolling window
+    VOLT_STEP_MS    = 15    # ms  – how far the window advances each frame
+    VOLT_FPS        = 15
+
+    # Three neurons shown per condition (row, col as fractions of grid size).
+    # The centre neuron is the "primary" (solid); the others are ghost traces.
+    # Having all three overlaid makes synchrony vs asynchrony visible at a glance.
+    _NEURON_FRAC   = [(0.25, 0.25), (0.50, 0.50), (0.75, 0.75)]
+    _NEURON_ALPHAS = [0.35, 1.00, 0.35]
+    _NEURON_WIDTHS = [0.85, 1.80, 0.85]
+
+    # ── extract & pre-process voltage data ───────────────────────────────────────
+    print("\nBuilding voltage GIF …")
+    volt_data = {}
+    for cond in CONDITIONS:
+        raw = raw_results[cond]
+        v   = raw["v_stn"]           # (T, G, G)
+        dt  = raw["dt"]
+        sr  = int(round(1000.0 / dt))
+
+        T_full, G, _ = v.shape
+
+        # Tail window matching the main GIF
+        win_steps = int(ANALYSIS_SEC * sr)
+        t_low_v   = max(0, T_full - win_steps)
+        v_win     = v[t_low_v:]      # (win_steps, G, G)
+
+        # Resolve neuron indices
+        neurons = [
+            (max(0, min(G - 1, int(fy * G))),
+            max(0, min(G - 1, int(fx * G))))
+            for fy, fx in _NEURON_FRAC
+        ]
+        traces = [v_win[:, r, c].astype(np.float32) for r, c in neurons]
+
+        # Scrolling-window frame counts
+        w_steps  = max(1, int(VOLT_WINDOW_MS * sr / 1000))
+        s_steps  = max(1, int(VOLT_STEP_MS   * sr / 1000))
+        n_frames = max(1, (v_win.shape[0] - w_steps) // s_steps)
+
+        # Full time axis for the mini-map
+        t_full = np.arange(v_win.shape[0]) * dt / 1000.0   # seconds
+
+        # Y-axis range (per condition, consistent across all frames)
+        all_v = np.concatenate(traces)
+        ymin  = float(np.percentile(all_v, 0.5))
+        ymax  = float(np.percentile(all_v, 99.5))
+        ypad  = (ymax - ymin) * 0.10
+
+        volt_data[cond] = dict(
+            traces   = traces,
+            neurons  = neurons,
+            t_full   = t_full,
+            w_steps  = w_steps,
+            s_steps  = s_steps,
+            n_frames = n_frames,
+            ymin     = ymin - ypad,
+            ymax     = ymax + ypad,
+        )
+
+    n_frames_v = min(d["n_frames"] for d in volt_data.values())
+    print(f"  → {n_frames_v} frames  ({n_frames_v / VOLT_FPS:.1f} s at {VOLT_FPS} fps)")
+
+    # ── build figure ──────────────────────────────────────────────────────────────
+    fig2 = plt.figure(figsize=(14, 7.0), facecolor=BG)
+    fig2.subplots_adjust(
+        left=0.06, right=0.97,
+        top=0.87,  bottom=0.16,
+        wspace=0.30,
+    )
+
+    outer2 = gridspec.GridSpec(1, 3, figure=fig2, wspace=0.30)
+    ax_volt = {}
+    ax_mini = {}
+    for col, cond in enumerate(CONDITIONS):
+        inner2 = gridspec.GridSpecFromSubplotSpec(
+            2, 1,
+            subplot_spec  = outer2[col],
+            height_ratios = [3.2, 0.85],
+            hspace        = 0.10,
+        )
+        ax_volt[cond] = fig2.add_subplot(inner2[0])
+        ax_mini[cond] = fig2.add_subplot(inner2[1])
+
+    # ── static text ───────────────────────────────────────────────────────────────
+    fig2.text(0.51, 0.965, "STN Single-Neuron Voltage Traces",
+            ha="center", va="top", color=TEXT, fontsize=14, fontweight="bold")
+    fig2.text(
+        0.51, 0.942,
+        f"{VOLT_WINDOW_MS} ms scrolling window  ·  "
+        "3 neurons overlaid  (centre = solid, neighbours = ghost)  ·  "
+        "synchrony visible in PD",
+        ha="center", va="top", color=SUBTEXT, fontsize=8.0,
+    )
+
+    for cx, cond in zip(col_x, CONDITIONS):
+        accent = COND_ACCENT[cond]
+        fig2.text(cx, 0.910, cond,
+                ha="center", va="bottom", color=accent,
+                fontsize=13, fontweight="bold")
+        fig2.add_artist(plt.Line2D(
+            [cx - 0.085, cx + 0.085], [0.908, 0.908],
+            transform=fig2.transFigure,
+            color=accent, linewidth=1.5, alpha=0.60,
+        ))
+
+    # ── per-condition axes setup ──────────────────────────────────────────────────
+    line_objs = {}     # {cond: [line, line, line]}
+    mini_boxes = {}    # {cond: Rectangle}
+    time_txts  = {}
+    volt_txts  = {}
+
+    for cond, d in volt_data.items():
+        acc = COND_ACCENT[cond]
+        ax  = ax_volt[cond]
+        axm = ax_mini[cond]
+
+        # ── main voltage panel ────────────────────────────────────────────────────
+        _style_ax(ax, ylabel="V (mV)")
+        ax.set_xlim(0, VOLT_WINDOW_MS / 1000.0)
+        ax.set_ylim(d["ymin"], d["ymax"])
+        ax.set_xticklabels([])   # time is shown on mini-map below
+
+        # Coloured border (matches condition accent)
+        for sp in ax.spines.values():
+            sp.set_visible(True)
+            sp.set_edgecolor(acc)
+            sp.set_linewidth(1.3)
+            sp.set_alpha(0.45)
+
+        r_pri, c_pri = d["neurons"][1]
+        ax.set_title(
+            f"primary neuron [{r_pri}, {c_pri}]",
+            color=TEXT, fontsize=8.0, fontweight="bold", pad=5,
+        )
+
+        # Zero-voltage reference
+        ax.axhline(0, color=BORDER, linewidth=0.5, linestyle="--", alpha=0.45)
+
+        # Initialise trace lines (empty)
+        lines = []
+        for al, lw in zip(_NEURON_ALPHAS, _NEURON_WIDTHS):
+            ln, = ax.plot([], [], color=acc, alpha=al, linewidth=lw, zorder=3)
+            lines.append(ln)
+        line_objs[cond] = lines
+
+        # Overlay text
+        tt = ax.text(0.98, 0.97, "t = 0.000 s",
+                    transform=ax.transAxes, color=TEXT,
+                    fontsize=7.5, va="top", ha="right", fontfamily="monospace")
+        vt = ax.text(0.02, 0.97, "V = — mV",
+                    transform=ax.transAxes, color=acc,
+                    fontsize=7.5, va="top", ha="left", fontfamily="monospace")
+        time_txts[cond] = tt
+        volt_txts[cond] = vt
+
+        # ── mini-map (full tail trace of the centre neuron) ───────────────────────
+        _style_ax(axm, xlabel="Time (s)")
+        axm.plot(d["t_full"], d["traces"][1],
+                color=acc, linewidth=0.6, alpha=0.65)
+        axm.set_xlim(d["t_full"][0], d["t_full"][-1])
+        axm.set_ylim(d["ymin"], d["ymax"])
+        axm.set_yticks([])
+        axm.tick_params(labelsize=7.0)
+
+        # Sliding highlight box
+        box_w = VOLT_WINDOW_MS / 1000.0
+        rect  = plt.Rectangle(
+            (d["t_full"][0], d["ymin"]),
+            box_w,
+            d["ymax"] - d["ymin"],
+            color=acc, alpha=0.18, zorder=4, linewidth=0,
+        )
+        axm.add_patch(rect)
+        # Sliding box left edge indicator
+        axm.add_patch(plt.Rectangle(
+            (d["t_full"][0], d["ymin"]), 0.001,
+            d["ymax"] - d["ymin"],
+            color=acc, alpha=0.80, zorder=5, linewidth=0,
+        ))
+        mini_boxes[cond] = rect
+
+    # ── progress bar ──────────────────────────────────────────────────────────────
+    pb_ax2 = fig2.add_axes([0.05, 0.025, 0.90, 0.010])
+    pb_ax2.set_xlim(0, n_frames_v)
+    pb_ax2.set_ylim(0, 1)
+    pb_ax2.axis("off")
+    pb_ax2.barh(0.5, n_frames_v, left=0, height=1.0, color="#21262d")
+    pb2_fill  = plt.Rectangle((0, 0), 0, 1, color="#388bfd",
+                                transform=pb_ax2.transData, zorder=3)
+    pb_ax2.add_patch(pb2_fill)
+    pb2_label = pb_ax2.text(
+        n_frames_v / 2, -0.9, "",
+        ha="center", va="top", color=SUBTEXT,
+        fontsize=7, fontfamily="monospace",
+        transform=pb_ax2.transData,
+    )
+
+    # ── animation update ──────────────────────────────────────────────────────────
+    def update_volt(frame: int):
+        artists = []
+        for cond, d in volt_data.items():
+            fi    = min(frame, d["n_frames"] - 1)
+            start = fi * d["s_steps"]
+            end   = start + d["w_steps"]
+
+            t_seg = d["t_full"][start:end]
+            t_rel = t_seg - t_seg[0]    # 0 … VOLT_WINDOW_MS/1000 s
+
+            for tr, ln in zip(d["traces"], line_objs[cond]):
+                ln.set_data(t_rel, tr[start:end])
+
+            mid   = start + d["w_steps"] // 2
+            t_now = float(d["t_full"][min(mid, len(d["t_full"]) - 1)])
+            v_now = float(d["traces"][1][min(mid, len(d["traces"][1]) - 1)])
+            time_txts[cond].set_text(f"t = {t_now:.3f} s")
+            volt_txts[cond].set_text(f"V = {v_now:+.1f} mV")
+
+            # Slide the mini-map box
+            mini_boxes[cond].set_x(d["t_full"][start])
+
+            artists += line_objs[cond]
+            artists += [time_txts[cond], volt_txts[cond], mini_boxes[cond]]
+
+        pb2_fill.set_width(frame + 1)
+        pb2_label.set_text(
+            f"{100.0 * (frame + 1) / n_frames_v:5.1f}%  ·  "
+            f"frame {frame + 1}/{n_frames_v}"
+        )
+        artists += [pb2_fill, pb2_label]
+        return artists
+
+    # ── render ────────────────────────────────────────────────────────────────────
+    anim2 = FuncAnimation(
+        fig2, update_volt,
+        frames   = n_frames_v,
+        interval = int(1000 / VOLT_FPS),
+        blit     = True,
+    )
+    anim2.save(VOLT_OUTPUT_GIF, writer=PillowWriter(fps=VOLT_FPS), dpi=OUTPUT_DPI)
+    print(f"✓  Saved → {VOLT_OUTPUT_GIF}")
+    plt.close(fig2)
