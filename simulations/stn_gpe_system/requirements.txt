@@ -6,3 +6,4 @@ seaborn
 gymnasium
 torch
 pyyaml
+scipy
