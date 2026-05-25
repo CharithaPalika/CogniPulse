@@ -11,7 +11,7 @@ inter_sparse : 0.1
 
 # STN-GPe params
 I_strd2_gpe : 5
-lat_strength_stn : 0.03 
+lat_strength_stn : 0.0275
 lat_strength_gpe : 0.1
 wsg_strength : 0.1
 wgs_strength : 0.1
