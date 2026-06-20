@@ -5,3 +5,9 @@ matplotlib
 seaborn
 gymnasium
 torch
+scipy
+tqdm
+ipywidgets
+ipywidgets
+jupyter
+pyyaml
