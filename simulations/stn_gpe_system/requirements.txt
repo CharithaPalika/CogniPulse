@@ -9,3 +9,5 @@ pyyaml
 scipy
 tqdm
 ipywidgets
+ipywidgets
+jupyter
