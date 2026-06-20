@@ -130,7 +130,7 @@ STN_PARAM_DIR = os.path.join(PROJECT_ROOT, "params", "stn_gpe_params")
 PLOT_BG      = "#0d1117"
 PLOT_SURFACE = "#161b22"
 PLOT_GRID    = "#21262d"
-PLOT_TEXT    = "#c9d1d9"
+PLOT_TEXT    = "#000000"
 PLOT_SPINE   = "#30363d"
 
 COLOR_A = "#ff7b7b"   # disadvantageous – coral red
