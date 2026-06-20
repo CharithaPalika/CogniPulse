@@ -538,7 +538,7 @@ with st.sidebar:
     I_strd2_gpe   = st.number_input("I_strd2_gpe",   value=5.0,  step=0.5,  format="%.2f")
     I_gpe_ext     = st.number_input("I_gpe_ext",     value=6.0,  step=0.5,  format="%.2f")
     I_stn_ext     = st.number_input("I_stn_ext",     value=12.0, step=0.5,  format="%.2f")
-    stn_gpe_noise = st.number_input("stn_gpe_noise", value=0.0,  step=0.5,  format="%.2f")
+    stn_gpe_noise = st.number_input("stn_gpe_noise", value=3.0,  step=0.5,  format="%.2f")
 
     # ── Spike analysis ────────────────────────────────────────────────────────
     st.markdown('<p class="sidebar-section">Spike Analysis</p>', unsafe_allow_html=True)
