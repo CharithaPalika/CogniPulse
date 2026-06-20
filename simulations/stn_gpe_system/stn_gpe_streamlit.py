@@ -31,12 +31,73 @@ st.markdown(
     /* Global background */
     .stApp { background-color: #0d1117; color: #e6edf3; }
 
+    # /* Sidebar */
+    # [data-testid="stSidebar"] {
+    #     background-color: #161b22;
+    #     border-right: 1px solid #30363d;
+    # }
+    # [data-testid="stSidebar"] * { color: #e6edf3 !important; }
     /* Sidebar */
     [data-testid="stSidebar"] {
         background-color: #161b22;
         border-right: 1px solid #30363d;
     }
-    [data-testid="stSidebar"] * { color: #e6edf3 !important; }
+
+    /* Labels only */
+    [data-testid="stSidebar"] label,
+    [data-testid="stSidebar"] p,
+    [data-testid="stSidebar"] h1,
+    [data-testid="stSidebar"] h2,
+    [data-testid="stSidebar"] h3,
+    [data-testid="stSidebar"] span {
+        color: #e6edf3 !important;
+    }
+
+    /* Number inputs */
+    .stNumberInput input {
+        color: #000000 !important;
+        background-color: #ffffff !important;
+        -webkit-text-fill-color: #000000 !important;
+    }
+
+    /* Disabled number inputs */
+    .stNumberInput input:disabled {
+        color: #555555 !important;
+        -webkit-text-fill-color: #555555 !important;
+    }
+
+    /* Selectbox text */
+    div[data-baseweb="select"] > div {
+        color: #000000 !important;
+        background-color: #ffffff !important;
+    }
+
+    /* Selectbox input */
+    div[data-baseweb="select"] input {
+        color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
+    }
+
+    /* Dropdown menu */
+    div[role="listbox"] {
+        background-color: #ffffff !important;
+    }
+
+    div[role="option"] {
+        color: #000000 !important;
+    }
+
+    /* Buttons inside number inputs */
+    .stNumberInput button {
+        color: #000000 !important;
+    }
+
+    /* Slider values */
+    .stSlider span {
+        color: #e6edf3 !important;
+}
+
+
 
     /* Sidebar section labels */
     .sidebar-section {
