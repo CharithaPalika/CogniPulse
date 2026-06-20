@@ -28,13 +28,61 @@ st.markdown(
         color: #e6edf3;
     }
 
-    /* ── Sidebar ── */
+    # /* ── Sidebar ── */
+    # [data-testid="stSidebar"] {
+    #     background-color: #161b22;
+    #     border-right: 1px solid #30363d;
+    # }
+    # [data-testid="stSidebar"] * {
+    #     color: #e6edf3 !important;
+    # }
+    /* ── Sidebar ───────────────────────────────────── */
     [data-testid="stSidebar"] {
         background-color: #161b22;
         border-right: 1px solid #30363d;
     }
-    [data-testid="stSidebar"] * {
+
+    /* Sidebar labels */
+    [data-testid="stSidebar"] label,
+    [data-testid="stSidebar"] p,
+    [data-testid="stSidebar"] span {
         color: #e6edf3 !important;
+    }
+
+    /* Number input text */
+    .stNumberInput input {
+        color: #000000 !important;
+        background-color: #ffffff !important;
+    }
+
+    /* Number input +/- buttons */
+    .stNumberInput button {
+        color: #000000 !important;
+        background-color: #ffffff !important;
+    }
+
+    /* Selectbox text */
+    div[data-baseweb="select"] > div {
+        color: #000000 !important;
+        background-color: #ffffff !important;
+    }
+
+    /* Dropdown menu */
+    div[role="listbox"] {
+        color: #000000 !important;
+        background-color: #ffffff !important;
+    }
+
+    /* Selected option text */
+    div[role="option"] {
+        color: #000000 !important;
+    }
+
+    /* Disabled widgets */
+    [data-baseweb="select"] input:disabled,
+    .stNumberInput input:disabled {
+        color: #555555 !important;
+        -webkit-text-fill-color: #555555 !important;
     }
 
     /* ── Sidebar section headers ── */
@@ -130,7 +178,7 @@ STN_PARAM_DIR = os.path.join(PROJECT_ROOT, "params", "stn_gpe_params")
 PLOT_BG      = "#0d1117"
 PLOT_SURFACE = "#161b22"
 PLOT_GRID    = "#21262d"
-PLOT_TEXT    = "#000000"
+PLOT_TEXT    = "#c9d1d9"
 PLOT_SPINE   = "#30363d"
 
 COLOR_A = "#ff7b7b"   # disadvantageous – coral red
