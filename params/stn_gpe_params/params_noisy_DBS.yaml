@@ -11,7 +11,7 @@ inter_sparse : 0.1
 
 # STN-GPe params
 I_strd2_gpe : 5
-lat_strength_stn : 0.0275
+lat_strength_stn : 0.0275 
 lat_strength_gpe : 0.1
 wsg_strength : 0.1
 wgs_strength : 0.1
@@ -23,13 +23,13 @@ stn_gpe_noise: 3
 # DBS Params
 DBS : True
 DBS_func: 'biphasicDBS_variablefreq' # 'biphasicDBS' # 'monophasicDBS', 'biphasicDBS' , 'biphasicDBS_uninoise', 'biphasicDBS_normalnoise'
-DBS_amplitude : 175 #250 
-DBS_freq : 30 #150
+
+DBS_amplitude : 160 #175 #250 
+DBS_freq : 40 #30 #150
 pulse_width_micro : 200 #200 microseconds
 DBS_normmean : 2000 # microseconds
 DBS_normstd : 1000 #4000 #200 #700 # micro seconds
-# sector_wise : False
-# t_sector_activation : 2000 # 10000 points is one second => 2000 points is 0.2 seconds => 5Hz
+
 
 # DBS Spread
 center : 7
